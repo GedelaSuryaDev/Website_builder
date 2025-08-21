@@ -1,25 +1,51 @@
-# ADK Agents Suite
+# Website Builder - Multi-Agent System
 
-A collection of AI agents built with the Google ADK Agents framework. This repo is organized for composing multiple task-focused agents (e.g., content, media, research) that can be orchestrated together or used standalone.
+An intelligent website creation system powered by Google ADK Agents framework. This system uses a sequential workflow of specialized AI agents to transform user requirements into complete, functional websites.
 
-## Features
-- Modular agent design using `LlmAgent`
-- Tool-first approach for reliable actions (search, image ops, I/O)
-- Ready to integrate into larger multi-agent systems
+## 🚀 Overview
 
-## Structure
-- `agents/` (this folder): repository root
-  - `.gitignore` – ignores caches, build artifacts, and virtual envs
-  - `requirements.txt` – minimal dependencies to run typical agents
-  - Add your agent modules and tools alongside this file
+The Website Builder employs three specialized agents working in sequence:
 
-## Getting Started
+1. **Requirements Agent** (Business Analyst)
+   - Analyzes user input and generates comprehensive website requirements
+   - Defines scope, features, pages, technical constraints, and business logic
+   - Output: Structured requirements document
+
+2. **Designer Agent** (UI/UX Designer)  
+   - Creates design specifications based on requirements
+   - Generates layout suggestions, component structure, styling guidelines
+   - Output: Design artifacts and component specifications
+
+3. **Coder Agent** (Full-Stack Developer)
+   - Implements the website based on design and requirements
+   - Generates frontend, backend, or full-stack code as needed
+   - Output: Complete, deployable website code
+
+## 🏗️ Architecture
+
+```
+User Input → Requirements Agent → Designer Agent → Coder Agent → Website
+```
+
+**Supporting Components:**
+- `tools/` - Shared tools and integrations used by agents
+- `utils/` - Common utility functions and helpers
+- Agent orchestration handles data flow between stages
+
+## 🛠️ Getting Started
+
+### Prerequisites
+- Python 3.8+
+- Google ADK Agents framework access
+
+### Installation
+
 ```powershell
-# Clone the repo
+# Clone the repository
 git clone https://github.com/GedelaSuryaDev/Website_builder.git
 cd Website_builder
 
-# Create & activate a virtual environment (Windows PowerShell)
+# Create virtual environment
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 
@@ -27,45 +53,71 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-## Usage
-- Create an agent in a module (e.g., `my_agent.py`) that imports `LlmAgent` and any tools you need.
-- Example (pseudo-code):
+### Basic Usage
+
 ```python
 from google.adk.agents import LlmAgent
-from google.adk.tools import google_search
+from website_builder import WebsiteBuilderWorkflow
 
-my_agent = LlmAgent(
-    name="demo_agent",
-    model="gemini-2.5-flash",
-    description="Demo agent",
-    instruction="Use google_search to answer the query concisely.",
-    tools=[google_search]
-)
+# Initialize the workflow
+workflow = WebsiteBuilderWorkflow()
 
-# In your runtime/orchestrator
-# result = my_agent.run("Find top resources for X")
-# print(result)
+# Create a website from user requirements
+user_input = "I need an e-commerce site for selling handmade jewelry"
+website = workflow.create_website(user_input)
+
+print(f"Website created: {website.output_path}")
 ```
 
-## Website Builder: Multi-Agent Sequential Workflow
-This project includes a multi-agent system that uses a sequential workflow to create a website. It contains three agents in the pipeline:
+## 📁 Project Structure
 
-1) Requirement Agent (Business Analyst)
-   - Takes high-level user inputs about the website and produces complete, structured requirements.
-   - Acts like a business analyst to clarify scope, features, pages, and constraints.
+```
+agents/
+├── requirements_agent.py    # Business analyst agent
+├── designer_agent.py        # UI/UX designer agent  
+├── coder_agent.py          # Full-stack developer agent
+├── tools/                  # Shared agent tools
+├── utils/                  # Common utilities
+├── workflows/              # Orchestration logic
+└── examples/               # Usage examples
+```
 
-2) Designer Agent
-   - Consumes the output from the Requirement Agent.
-   - Produces design artifacts (e.g., layout suggestions, component structure, styles) for the website.
+## 🔧 Configuration
 
-3) Coder Agent
-   - Consumes the Designer Agent output and cross-checks the Requirement Agent output.
-   - Generates code for frontend, backend, or both, based on user needs.
+Create a `.env` file with required API keys:
 
-Utilities
-- These agents use tools from the `tools/` folder and shared utilities from the `utils/` folder.
+```env
+GOOGLE_ADK_API_KEY=your-adk-key
+OPENAI_API_KEY=your-openai-key  # if using OpenAI models
+# Add other service keys as needed
+```
 
-## Development Notes
-- Keep credentials out of source (use env vars or a secrets manager)
-- Add project-specific ignores to `.gitignore`
-- Pin dependency versions when moving to production
+## 🚦 Development
+
+### Adding New Agents
+1. Create agent module in appropriate directory
+2. Implement using `LlmAgent` base class
+3. Add to workflow orchestration
+4. Update documentation
+
+### Security Best Practices
+- Store credentials in environment variables or secrets manager
+- Never commit API keys to version control
+- Use `.gitignore` for sensitive files
+- Pin dependency versions for production deployments
+
+## 📝 Examples
+
+See `examples/` directory for:
+- Basic website creation
+- E-commerce site generation  
+- Blog/portfolio sites
+- Custom workflow implementations
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open Pull Request
