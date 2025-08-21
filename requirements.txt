@@ -1,0 +1,2 @@
+# Minimal dependencies for ADK agents
+google-adk>=1.8.0
