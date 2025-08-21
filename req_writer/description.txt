@@ -1,0 +1,3 @@
+This agent takes in a user query that relates to building a web page. 
+the agent then converts this query into a detailed set of requirments 
+for a website.
