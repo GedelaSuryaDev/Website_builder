@@ -63,7 +63,7 @@ This project includes a multi-agent system that uses a sequential workflow to cr
    - Generates code for frontend, backend, or both, based on user needs.
 
 Utilities
-- These agents use tools from the `tools/` folder and shared utilities from the `util/` folder.
+- These agents use tools from the `tools/` folder and shared utilities from the `utils/` folder.
 
 ## Development Notes
 - Keep credentials out of source (use env vars or a secrets manager)
